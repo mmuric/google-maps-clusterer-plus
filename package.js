@@ -1,6 +1,6 @@
 Package.describe({
   name: 'joshdellay:google-maps-cluster',
-  version: '0.0.5',
+  version: '0.0.7',
   // Brief, one-line summary of the package.
   summary: 'A utility libarary for Google Maps marker clustering.',
   // URL to the Git repository containing the source code for this package.
@@ -11,8 +11,9 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0.3.1');
-  api.use('jquery@1.11.3', 'client');
-  api.imply('jquery', 'client');
-  api.addFiles('joshdellay:google-maps-cluster.js');
+    api.versionsFrom('1.0.3.1');
+    api.use('dburles:google-maps');
+    api.imply('dburles:google-maps');
+    api.addFiles('lib/joshdellay:google-maps-cluster.js');
+    api.export('MarkerClusterer', 'client');
 });
