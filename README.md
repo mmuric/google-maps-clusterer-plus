@@ -1,1 +1,1 @@
-# google-maps-cluster
+# google-maps-clusterer-plus
