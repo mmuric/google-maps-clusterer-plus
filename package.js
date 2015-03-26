@@ -13,12 +13,13 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.0.4.2');
   api.use('dburles:google-maps');
+  api.imply('dburles:google-maps');
   api.addFiles('mmuric:google-maps-clusterer-plus.js');
   api.export('MarkerClusterer', 'client');
 });
 
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('mmuric:google-maps-clusterer-plus');
-  api.addFiles('google-maps-clusterer-plus-tests.js');
-});
+// Package.onTest(function(api) {
+  // api.use('tinytest');
+  // api.use('mmuric:google-maps-clusterer-plus');
+  // api.addFiles('google-maps-clusterer-plus-tests.js');
+// });

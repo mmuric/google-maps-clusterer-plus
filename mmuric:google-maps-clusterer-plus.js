@@ -247,14 +247,21 @@ ClusterIcon.prototype.show = function () {
     var spriteH = parseInt(bp[0].trim(), 10);
     var spriteV = parseInt(bp[1].trim(), 10);
     var pos = this.getPosFromLatLng_(this.center_);
+    var cluster = "";
+
     this.div_.style.cssText = this.createCss(pos);
-    img = "<img src='" + this.url_ + "' style='position: absolute; top: " + spriteV + "px; left: " + spriteH + "px; ";
-    if (!this.cluster_.getMarkerClusterer().enableRetinaIcons_) {
-      img += "clip: rect(" + (-1 * spriteV) + "px, " + ((-1 * spriteH) + this.width_) + "px, " +
-          ((-1 * spriteV) + this.height_) + "px, " + (-1 * spriteH) + "px);";
-    }
-    img += "'>";
-    this.div_.innerHTML = img + "<div style='" +
+ 	if(this.htmlWrapper) {
+ 		cluster = eval(this.htmlWrapper + "({'child_count': " + this.sums_.text + "})");
+ 	} else {
+ 		
+	    img = "<img src='" + this.url_ + "' style='position: absolute; top: " + spriteV + "px; left: " + spriteH + "px; ";
+	    if (!this.cluster_.getMarkerClusterer().enableRetinaIcons_) {
+	      img += "clip: rect(" + (-1 * spriteV) + "px, " + ((-1 * spriteH) + this.width_) + "px, " +
+	          ((-1 * spriteV) + this.height_) + "px, " + (-1 * spriteH) + "px);";
+	    }
+	    img += "'>";
+	    
+	    cluster = img + "<div class='markerCounterWrapper' style='" +
         "position: absolute;" +
         "top: " + this.anchorText_[0] + "px;" +
         "left: " + this.anchorText_[1] + "px;" +
@@ -268,6 +275,9 @@ ClusterIcon.prototype.show = function () {
         "width: " + this.width_ + "px;" +
         "line-height:" + this.height_ + "px;" +
         "'>" + this.sums_.text + "</div>";
+ 	}
+    this.div_.innerHTML = cluster;
+        
     if (typeof this.sums_.title === "undefined" || this.sums_.title === "") {
       this.div_.title = this.cluster_.getMarkerClusterer().getTitle();
     } else {
@@ -289,6 +299,11 @@ ClusterIcon.prototype.useStyle = function (sums) {
   var index = Math.max(0, sums.index - 1);
   index = Math.min(this.styles_.length - 1, index);
   var style = this.styles_[index];
+
+	if(style.htmlWrapper) {
+	  	this.htmlWrapper = style.htmlWrapper; 
+	}
+	
   this.url_ = style.url;
   this.height_ = style.height;
   this.width_ = style.width;
@@ -705,6 +720,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
   this.batchSize_ = opt_options.batchSize || MarkerClusterer.BATCH_SIZE;
   this.batchSizeIE_ = opt_options.batchSizeIE || MarkerClusterer.BATCH_SIZE_IE;
   this.clusterClass_ = opt_options.clusterClass || "cluster";
+  this.htmlWrapper_ = opt_options.htmlWrapper || null;
 
   if (navigator.userAgent.toLowerCase().indexOf("msie") !== -1) {
     // Try to avoid IE timeout when processing a huge number of markers:
@@ -801,11 +817,21 @@ MarkerClusterer.prototype.setupStyles_ = function () {
 
   for (i = 0; i < this.imageSizes_.length; i++) {
     size = this.imageSizes_[i];
-    this.styles_.push({
-      url: this.imagePath_ + (i + 1) + "." + this.imageExtension_,
-      height: size,
-      width: size
-    });
+    if (this.htmlWrapper_) {
+    	this.styles_.push({
+    		htmlWrapper: this.htmlWrapper_,
+    		url: this.imagePath_ + (i + 1) + "." + this.imageExtension_,
+		    height: size,
+		    width: size
+    	});
+    } else {
+    	
+	    this.styles_.push({
+	      url: this.imagePath_ + (i + 1) + "." + this.imageExtension_,
+	      height: size,
+	      width: size
+	    });
+    }
   }
 };
 
