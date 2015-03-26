@@ -12,7 +12,7 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0.4.2');
-  api.use('dburles:google-maps');
+  api.use('dburles:google-maps@1.0.8');
   api.imply('dburles:google-maps');
   api.addFiles('mmuric:google-maps-clusterer-plus.js');
   api.export('MarkerClusterer', 'client');
