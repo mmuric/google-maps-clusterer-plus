@@ -675,7 +675,7 @@ Cluster.prototype.isMarkerAlreadyAdded_ = function (marker) {
  * @param {Array.<google.maps.Marker>} [opt_markers] The markers to be added to the cluster.
  * @param {MarkerClustererOptions} [opt_options] The optional parameters.
  */
-function MarkerClusterer(map, opt_markers, opt_options) {
+MarkerClusterer = function(map, opt_markers, opt_options) {
   // MarkerClusterer implements google.maps.OverlayView interface. We use the
   // extend function to extend MarkerClusterer with google.maps.OverlayView
   // because it might not always be available when the code is defined so we
@@ -731,7 +731,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
 
   this.addMarkers(opt_markers, true);
   this.setMap(map); // Note: this causes onAdd to be called
-}
+};
 
 
 /**
