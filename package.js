@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'mmuric:google-maps-clusterer-plus',
-  	version: '0.0.1',
+  	version: '0.0.3',
   	// Brief, one-line summary of the package.
   	summary: 'A utility libarary for Google Maps marker clustering.',
   	// URL to the Git repository containing the source code for this package.
@@ -12,8 +12,7 @@ Package.describe({
 
 Package.onUse(function(api) {
 	api.versionsFrom('1.0.4.2');
-  	api.use('dburles:google-maps@1.0.8');
-  	// api.imply('dburles:google-maps');
+  	api.use('mmuric:google-map-api@0.0.1');
   	api.addFiles('mmuric:google-maps-clusterer-plus.js');
   	api.export('MarkerClusterer', 'client');
 });
